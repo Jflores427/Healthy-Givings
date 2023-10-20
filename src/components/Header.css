@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.header img {
+    width: 85px;
+    height: 85px;
+}
+
+
+

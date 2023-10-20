@@ -1,0 +1,31 @@
+.list {
+    height: 60vh;
+    width: 50vw;
+    border: 2px solid #00FF00;
+    border-radius: 20px;
+}
+
+.table-recipes {
+    position: relative;
+    left: 150px;
+}
+
+.table-recipes thead tr th {
+    padding: 10px;
+}
+
+input {
+    margin: 20px;
+}
+
+label {
+    color: white;
+    font-weight: 700;
+}
+
+.list button {
+     margin: 20px;
+     color: green;
+     border: 2px solid green;
+     background-color: #FFFFFF;
+}
