@@ -8,10 +8,12 @@ const List = (props) => {
         <div className="list">
             <input type="search" className="search-filter" id="search-filter" placeholder="Enter Recipe Name"></input>
             <label id="range-label-start">Health Score - 0</label>
-            <input type="range" className="range-filter" id="range-filter" min="0" max="100" step="10"></input>
+            <input type="range" className="range-filter" id="range-filter" min="0" max="100" defaultValue="0" step="10"></input>
             <label id="range-label-end">100</label>
             
             <button onClick={onSearch}>Search</button>
+            <div className="table-container">
+
             {(dataList.length !== 0) ? <table className="table-recipes">
                 <thead>
                     <tr>
@@ -24,17 +26,18 @@ const List = (props) => {
                 </thead>
                 <tbody>
                     {dataList && dataList.map((data) => (
-                    <tr className="recipe-entry" id={data.title}>  
+                    <tr className="recipe-entry" key={data.title} id={data.title}>  
                         <td>{data.title}</td> 
                         <td>{data.healthScore}</td>
-                        <td>{data.pricePerServing}</td>
+                        <td>{(data.pricePerServing / data.servings).toFixed(2)}</td>
                         <td>{data.readyInMinutes}</td>
                         <td>{data.diets.join(", ")}</td>
                     </tr>
                     ))}
                 </tbody>
-            </table> : <h3>NO RESULTS SHOWN</h3>
+            </table> : <h3>NO RESULTS AVAILABLE</h3>
             }
+            </div>
             
         </div>
     );

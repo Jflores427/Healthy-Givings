@@ -10,17 +10,13 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
 .health-container {
   display: flex;
   opacity: 0.85;
 }
 
-
 .nav-container {
+  font-family: Asparagus;
   background-color: black;
   opacity: 0.85;
   height: 100vh;

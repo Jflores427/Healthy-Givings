@@ -1,28 +1,12 @@
-import { useState, useEffect } from 'react'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
 
-import Header from "./components/Header"
-import NavBar from "./components/NavBar"
-import Card from "./components/Card"
-import List from "./components/List"
+import Header from "./components/Header";
+import NavBar from "./components/NavBar";
+import Card from "./components/Card";
+import List from "./components/List";
 
-
-// Healthy/Affordable Recipes
-
-// # of Recipes based on Query
-// Most Common Cuisine Type of All Results
-// Avg Price
-
-// Enter Recipe Name Search bar
-// Health Score filter (Min Health Score to Max Health Score, 10 increments)
-
-
-// 20 results per page Default
-
-
-// Sort the results By Healthinesss?
-// Next Page, Previous Page, Page  # Search?
+import dummyDataJSON from "/dummyData.js";
 
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
@@ -33,25 +17,9 @@ function App() {
   const [avgPrice, setAvgPrice] = useState(0);
   const [avgReadyTime, setAvgReadyTime] = useState(0);
   
-
   useEffect(() => {
-    //getRecipes("healthy");
-    setRecipes([
-      {title: "recipe 1", healthScore: 90, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-      {title: "recipe 2", healthScore: 100, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-      {title: "recipe 3", healthScore: 100, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-      {title: "recipe 4", healthScore: 100, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-    ]
-      );
-    setDisplayedRecipes([
-      {title: "recipe 1", healthScore: 90, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-      {title: "recipe 2", healthScore: 100, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-      {title: "recipe 3", healthScore: 100, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-      {title: "recipe 4", healthScore: 100, pricePerServing: 200, readyInMinutes: 54, diets: ["thai", "american"]},
-    ]);
+    getRecipes("healthy");
   }, [])
-
-  
 
   const average = (arrayToAverage) => {
     let sum = 0;
@@ -66,7 +34,10 @@ function App() {
     const filterSearchBar = document.getElementById("search-filter");
     const filterRangeBar = document.getElementById("range-filter");
 
-    const filteredRecipesBySearch = (!filterSearchBar.value) ? recipes : recipes.filter((recipe) => recipe.title.includes(filterSearchBar.value))
+    const filteredRecipesBySearch = (!filterSearchBar.value) ? recipes : recipes.filter((recipe) => {
+      const regex = new RegExp(filterSearchBar.value, 'i');
+      return regex.test(recipe.title);
+    })
     const filteredRecipes = filteredRecipesBySearch.filter((recipe) => recipe.healthScore >= filterRangeBar.value);
 
     setDisplayedRecipes(filteredRecipes);
@@ -92,8 +63,11 @@ function App() {
       });
     }
 
-    if(recipeResults == null)
+    if(recipeResults == null) {
+      setRecipes(dummyDataJSON);
+      setDisplayedRecipes(dummyDataJSON);
       return;
+    }
 
     let recipeIDs = recipeResults.map((result) => result.id);
 
@@ -103,7 +77,7 @@ function App() {
     setDisplayedRecipes(recipesInfo);
 
     const readyTimeArray = recipesInfo.map((recipe) => recipe.readyInMinutes);
-    const avgPriceArray = recipesInfo.map((recipe) => recipe.pricePerServing);
+    const avgPriceArray = recipesInfo.map((recipe) => recipe.pricePerServing / recipe.servings);
 
     setAvgPrice(average(avgPriceArray));
     setAvgReadyTime(average(readyTimeArray));
@@ -111,14 +85,12 @@ function App() {
 
   return (
       <div className="health-container">
-        
         <div className="nav-container">
           <Header 
           headerTitle="Healthy Givings"
           headerLogo="https://cdn0.iconfinder.com/data/icons/fruits-and-vegetables-sketchy-icons/128/24-512.png" />
           <NavBar />
         </div>
-
         <div className="main-container">
           <div className="card-container">
             <Card 
@@ -134,7 +106,6 @@ function App() {
             dataDescription="Average Ready Time (Minutes)"
             />
           </div>
-
           <div className="list-container">
             <List 
             dataList={displayedRecipes}
@@ -146,4 +117,4 @@ function App() {
   );
 };
 
-export default App
+export default App;

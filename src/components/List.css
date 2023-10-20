@@ -1,21 +1,40 @@
 .list {
-    height: 60vh;
-    width: 50vw;
     border: 2px solid #00FF00;
     border-radius: 20px;
 }
 
-.table-recipes {
-    position: relative;
-    left: 150px;
+.table-container {
+    height: 60vh;
+    width: 65vw;
+    overflow: auto;
 }
 
-.table-recipes thead tr th {
+.table-recipes {
+    position: relative;
+    width: 60vw;
+    left: 50px;
+    overflow-y: auto;
+    overflow-x: auto;
+    table-layout: fixed;
+}
+
+.table-recipes thead tr th{
     padding: 10px;
+}
+
+table tbody tr {
+    margin: 20px;
+    word-wrap: break-word;
+}
+.table-recipes tbody td {
+    width: 110px;
+    word-wrap: break-word;
 }
 
 input {
     margin: 20px;
+    border-radius: 5px;
+    width: 200px;
 }
 
 label {
@@ -29,3 +48,4 @@ label {
      border: 2px solid green;
      background-color: #FFFFFF;
 }
+
