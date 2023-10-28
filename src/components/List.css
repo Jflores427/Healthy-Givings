@@ -1,25 +1,32 @@
 .list {
     border: 2px solid #00FF00;
     border-radius: 20px;
+    /* height: 60vh; */
 }
 
 .table-container {
     height: 60vh;
-    width: 65vw;
+    width: 45.25vw;
     overflow: auto;
 }
 
 .table-recipes {
     position: relative;
-    width: 60vw;
     left: 50px;
     overflow-y: auto;
     overflow-x: auto;
-    table-layout: fixed;
+    /* table-layout: fixed; */
+}
+
+
+th {
+    position: sticky;
+    top: 0;
 }
 
 .table-recipes thead tr th{
     padding: 10px;
+    background-color: black;
 }
 
 table tbody tr {
@@ -29,6 +36,7 @@ table tbody tr {
 .table-recipes tbody td {
     width: 110px;
     word-wrap: break-word;
+    border-bottom: 1px solid white;
 }
 
 input {
@@ -47,5 +55,11 @@ label {
      color: green;
      border: 2px solid green;
      background-color: #FFFFFF;
+}
+
+.table-recipes tbody .recipe-button {
+    background-color: black;
+    border: 0px solid transparent;
+    
 }
 

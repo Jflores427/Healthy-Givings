@@ -1,3 +1,27 @@
+.health-container {
+    display: flex;
+    flex-flow: row nowrap;
+    opacity: 0.85;
+    border: 0px solid blue;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    right: 320px;
+  }
+
+.header-container {
+    font-family: Asparagus;
+    background-color: black;
+    opacity: 0.85;
+    height: 100vh;
+    width: 16vw;
+}
+
+.outlet-container {
+    width: 84vw;
+    height: 99.5vh;
+}
+
 .header {
     display: flex;
     flex-flow: row nowrap;

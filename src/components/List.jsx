@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import "./List.css";
+
 
 const List = (props) => {
 
@@ -22,6 +24,7 @@ const List = (props) => {
                         <th>Price ($ Per Serving)</th>
                         <th>Prep Time (Minutes)</th>
                         <th>Diets</th>
+                        <th>Recipe Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,9 +32,10 @@ const List = (props) => {
                     <tr className="recipe-entry" key={data.title} id={data.title}>  
                         <td>{data.title}</td> 
                         <td>{data.healthScore}</td>
-                        <td>{(data.pricePerServing / data.servings).toFixed(2)}</td>
+                        <td>{(data.pricePerServing / 100).toFixed(2)}</td>
                         <td>{data.readyInMinutes}</td>
                         <td>{data.diets.join(", ")}</td>
+                        <td>{<Link to={"/" + data.id} > 🧾 </Link>}</td>
                     </tr>
                     ))}
                 </tbody>

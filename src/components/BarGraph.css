@@ -1,0 +1,12 @@
+.bar-graph {
+    color: #00CC00;
+    background-color: black;
+    border-radius: 20px;
+    border: 2px solid #00FF00;
+
+}
+
+.bar-graph h3 {
+    font-family: Asparagus;
+    font-size: 20px;
+}

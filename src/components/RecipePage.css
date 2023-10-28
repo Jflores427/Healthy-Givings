@@ -1,0 +1,17 @@
+.recipe-container {
+    width: 90%;
+    height: 95%;
+    border: 2px solid #00FF00;
+    border-radius: 20px;
+    margin: 20px;
+    font-family: Asparagus;
+    background-color: black;
+    color: white;
+}
+
+.recipe-container h4{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:  90%;
+    position: relative;
+    left: 50px;
+}

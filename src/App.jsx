@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useParams } from 'react-router';
 import './App.css';
 
-import Header from "./components/Header";
-import NavBar from "./components/NavBar";
-import Card from "./components/Card";
-import List from "./components/List";
+
+import Home from './components/Home';
+import Header from './components/Header';
+import RecipePage from "./components/RecipePage"
 
 import dummyDataJSON from "/dummyData.js";
 
@@ -16,10 +18,11 @@ function App() {
   const [numOfRecipes, setNumOfRecipes] = useState(0);
   const [avgPrice, setAvgPrice] = useState(0);
   const [avgReadyTime, setAvgReadyTime] = useState(0);
-  
+  const [dishType, setDishType] = useState("")
+
   useEffect(() => {
     getRecipes("healthy");
-  }, [])
+  },[])
 
   const average = (arrayToAverage) => {
     let sum = 0;
@@ -46,26 +49,27 @@ function App() {
   async function getRecipes(searchQuery) {
     let recipeResults = null;
 
-    if(searchQuery) {
-      recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${searchQuery}&number=20&sort=healthiness`)
-      .then(response => response.json())
-      .then(response => { 
-        setNumOfRecipes(response.totalResults);  
-        return response.results; }
-      );
-    }
-    else {
-      recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=healthy&number=20&sort=healthiness`)
-      .then(response => response.json())
-      .then(response => {
-        setNumOfRecipes(response.totalResults);  
-        return response.results;
-      });
-    }
+    // if(searchQuery) {
+    //   recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${searchQuery}&number=20&sort=healthiness`)
+    //   .then(response => response.json())
+    //   .then(response => { 
+    //     setNumOfRecipes(response.totalResults);  
+    //     return response.results; }
+    //   );
+    // }
+    // else {
+    //   recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=healthy&number=20&sort=healthiness`)
+    //   .then(response => response.json())
+    //   .then(response => {
+    //     setNumOfRecipes(response.totalResults);  
+    //     return response.results;
+    //   });
+    // }
 
     if(recipeResults == null) {
       setRecipes(dummyDataJSON);
       setDisplayedRecipes(dummyDataJSON);
+      setDishType(modeOfDishTypes(dummyDataJSON));
       return;
     }
 
@@ -75,45 +79,54 @@ function App() {
 
     setRecipes(recipesInfo);
     setDisplayedRecipes(recipesInfo);
+    setDishType(modeOfDishTypes(recipesInfo));
 
     const readyTimeArray = recipesInfo.map((recipe) => recipe.readyInMinutes);
-    const avgPriceArray = recipesInfo.map((recipe) => recipe.pricePerServing / recipe.servings);
+    const avgPriceArray = recipesInfo.map((recipe) => recipe.pricePerServing / 100);
 
     setAvgPrice(average(avgPriceArray));
     setAvgReadyTime(average(readyTimeArray));
   }
 
+function modeOfDishTypes(recipes) {
+    const dishTypeHashMap = new Map();
+
+    recipes.forEach((recipe) => {
+      for(let i = 0; i < recipe.dishTypes.length; i++) {
+        if(dishTypeHashMap.has(recipe.dishTypes[i])) {
+          dishTypeHashMap.set(recipe.dishTypes[i], dishTypeHashMap.get(recipe.dishTypes[i]) + 1);
+        }
+        else {
+          dishTypeHashMap.set(recipe.dishTypes[i], 0)
+        }
+      }
+    });
+
+    const dishTypesArray = [...dishTypeHashMap.keys()];
+    let max = 0;
+    let maxValue ="";
+
+    for(let i = 0; i < dishTypesArray.length; i++) {
+      if(max < dishTypeHashMap.get(dishTypesArray[i])) {
+          max = dishTypeHashMap.get(dishTypesArray[i]);
+          maxValue = dishTypesArray[i];
+      }
+    }
+
+    return maxValue;
+  }
+    
+
   return (
-      <div className="health-container">
-        <div className="nav-container">
-          <Header 
-          headerTitle="Healthy Givings"
-          headerLogo="https://cdn0.iconfinder.com/data/icons/fruits-and-vegetables-sketchy-icons/128/24-512.png" />
-          <NavBar />
-        </div>
-        <div className="main-container">
-          <div className="card-container">
-            <Card 
-            data={numOfRecipes}
-            dataDescription="Total Recipes"
-            />
-            <Card 
-            data={"$"+ avgPrice.toFixed(2)}
-            dataDescription="Average Recipe Price"
-            />
-            <Card 
-            data={avgReadyTime}
-            dataDescription="Average Ready Time (Minutes)"
-            />
-          </div>
-          <div className="list-container">
-            <List 
-            dataList={displayedRecipes}
-            onSearch={onSearch}
-            />
-          </div>
-       </div>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Header headerLogo="./src/assets/Healthy-Givings-Logo.png" headerTitle="Healthy Givings"/>}>
+            <Route index={true} path="/" element={<Home recipes={recipes} displayedRecipes={displayedRecipes} numOfRecipes={numOfRecipes} avgPrice={avgPrice} avgReadyTime={avgReadyTime} dishType={dishType} onSearch={onSearch} />} />
+            <Route index={true} path=":recipeID" element={<RecipePage recipes={recipes} />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      
   );
 };
 

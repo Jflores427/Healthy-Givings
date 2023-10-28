@@ -10,12 +10,9 @@
   padding: 2em;
 }
 
-.health-container {
-  display: flex;
-  opacity: 0.85;
-}
 
-.nav-container {
+
+/* .nav-container {
   font-family: Asparagus;
   background-color: black;
   opacity: 0.85;
@@ -23,27 +20,6 @@
   width: 16vw;
   position: relative;
   right: 17vw;
-}
+} */
 
-.main-container {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  position: relative; 
-  right: 120px;
 
-}
-
-.card-container {
-  display: flex;
-  opacity: 0.85;
-
-}
-
-.list-container {
-    display: flex;
-    background-color: black;
-    border-radius: 20px;
-    opacity: 0.85;
-    color: white;
-}
