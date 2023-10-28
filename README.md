@@ -27,6 +27,8 @@ Here's a walkthrough of implemented user stories:
 
 <img src= './public/Healthy-Givings-2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+<!--  imgur link - https://imgur.com/a/GU4LAvX  >
+
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ScreenToGif 
 <!-- Recommended tools:
@@ -126,12 +128,13 @@ Here's a walkthrough of implemented user stories:
 <!--  Imgur link - https://imgur.com/a/seQa3oe>
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ScreenToGif  
+<!-- GIF created with ScreenToGif -->  
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
 [peek](https://github.com/phw/peek) for Linux. -->
 
+<!--
 ## Notes
 
 Describe any challenges encountered while building the app.

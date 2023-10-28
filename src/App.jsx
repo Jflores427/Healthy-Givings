@@ -49,22 +49,22 @@ function App() {
   async function getRecipes(searchQuery) {
     let recipeResults = null;
 
-    // if(searchQuery) {
-    //   recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${searchQuery}&number=20&sort=healthiness`)
-    //   .then(response => response.json())
-    //   .then(response => { 
-    //     setNumOfRecipes(response.totalResults);  
-    //     return response.results; }
-    //   );
-    // }
-    // else {
-    //   recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=healthy&number=20&sort=healthiness`)
-    //   .then(response => response.json())
-    //   .then(response => {
-    //     setNumOfRecipes(response.totalResults);  
-    //     return response.results;
-    //   });
-    // }
+    if(searchQuery) {
+      recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${searchQuery}&number=20&sort=healthiness`)
+      .then(response => response.json())
+      .then(response => { 
+        setNumOfRecipes(response.totalResults);  
+        return response.results; }
+      );
+    }
+    else {
+      recipeResults = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=healthy&number=20&sort=healthiness`)
+      .then(response => response.json())
+      .then(response => {
+        setNumOfRecipes(response.totalResults);  
+        return response.results;
+      });
+    }
 
     if(recipeResults == null) {
       setRecipes(dummyDataJSON);
